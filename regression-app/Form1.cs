@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,95 +13,48 @@ namespace regression_app
 {
     public partial class Form1 : Form
     {
-        double a = -0.836299077762619;      // intercept
-        double b1 = 0.0209264397439228;     // pregnancies
-        double b2 = 0.00570910928331046;    // glucose
-        double b3 = -0.00235721223666517;   // bloddPressure
+        double a = -0.836299077762619;      // Intercept
+        double b1 = 0.0209264397439228;     // Pregnancies
+        double b2 = 0.00570910928331046;    // Glucose
+        double b3 = -0.00235721223666517;   // Blodd Pressure
         double b4 = 0.0130807321960313;     // BMI
-        double b5 = 0.140301672799981;      // diabetesPedigreeFunstion
-        double b6 = 0.00279171098618659;    // age
+        double b5 = 0.140301672799981;      // Diabetes Pedigree Function
+        double b6 = 0.00279171098618659;    // Age
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        public int getOutcome(double x1, double x2, double x3, double x4, double x5, double x6)
+        public int GetOutcome(double x1, double x2, double x3, double x4, double x5, double x6)
         {
-            double result = 0;
+            double result = (x1 * b1) + (x2 * b2) + (x3 * b3) + (x4 * b4) + (x5 * b5) + (x6 * b6) + a;
 
-            result = (x1 * b1) + (x2 * b2) + (x3 * b3) + (x4 * b4) + (x5 * b5) + (x6 * b6);
-
-            return Convert.ToInt32(result);
-        }
-        private void label1_Click(object sender, EventArgs e)
-        {
-
+            return (int)Math.Ceiling(result);
         }
 
-        private void label2_Click(object sender, EventArgs e)
+
+        private void button1_Click(object sender, EventArgs e)
         {
+            var x1 = Convert.ToDouble(textBox1.Text);
+            var x2 = Convert.ToDouble(textBox2.Text);
+            var x3 = Convert.ToDouble(textBox3.Text);
+            var x4 = Convert.ToDouble(textBox4.Text);
+            var x5 = Convert.ToDouble(textBox5.Text);
+            var x6 = Convert.ToDouble(textBox6.Text);
 
-        }
+            var result = GetOutcome(x1, x2, x3, x4, x5, x6);
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox7_TextChanged(object sender, EventArgs e)
-        {
-
+            if (result == 1)
+            {
+                label9.Text = "Oh no!";
+                label5.Text = "You are Diabetic!";
+            }
+            else
+            {
+                label9.Text = "Yehey!";
+                label5.Text = "You're not Diabetic!";
+            }
         }
     }
 }
